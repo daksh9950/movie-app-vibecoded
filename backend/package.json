@@ -2,10 +2,10 @@
   "name": "server",
   "version": "1.0.0",
   "description": "Backend API for DSR Movies App (auth, favorites, history, admin).",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "npx nodemon index.js",
-    "start": "node index.js",
+    "dev": "npx nodemon server.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
