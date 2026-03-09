@@ -11,6 +11,25 @@ const favoriteSchema = new mongoose.Schema(
   { _id: false, timestamps: { createdAt: true, updatedAt: false } }
 );
 
+const watchlistSchema = new mongoose.Schema(
+  {
+    tmdbId: { type: String, required: true },
+    title: { type: String, required: true },
+    posterPath: { type: String },
+    mediaType: { type: String, enum: ["movie", "tv", "person"], default: "movie" },
+  },
+  { _id: false, timestamps: { createdAt: true, updatedAt: false } }
+);
+
+const ratingSchema = new mongoose.Schema(
+  {
+    tmdbId: { type: String, required: true },
+    rating: { type: Number, required: true, min: 1, max: 10 },
+    mediaType: { type: String, enum: ["movie", "tv"], default: "movie" },
+  },
+  { _id: false, timestamps: true }
+);
+
 const historyItemSchema = new mongoose.Schema(
   {
     tmdbId: { type: String, required: true },
@@ -31,6 +50,8 @@ const userSchema = new mongoose.Schema(
     isBanned: { type: Boolean, default: false },
     favorites: [favoriteSchema],
     watchHistory: [historyItemSchema],
+    watchlist: [watchlistSchema],
+    ratings: [ratingSchema],
   },
   { timestamps: true }
 );

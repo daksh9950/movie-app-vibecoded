@@ -28,15 +28,15 @@ function AdminUsers() {
     <div className='p-8'>
       <div className='flex justify-between items-center mb-6'>
         <div>
-          <h1 className='text-2xl font-bold text-white'>Users</h1>
-          <p className='text-zinc-400 text-sm'>{users.length} registered users</p>
+          <h1 className='text-2xl font-bold text-zinc-900 dark:text-white transition-colors'>Users</h1>
+          <p className='text-zinc-600 dark:text-zinc-400 text-sm transition-colors'>{users.length} registered users</p>
         </div>
-        <div className='flex items-center gap-3 bg-[#1A1929] border border-zinc-800 rounded-lg px-4 py-2.5'>
+        <div className='flex items-center gap-3 bg-white dark:bg-[#1A1929] border border-zinc-200 dark:border-zinc-800 rounded-lg px-4 py-2.5 transition-all shadow-sm'>
           <i className="ri-search-line text-zinc-400"></i>
           <input
             type="text"
             placeholder="Search users..."
-            className='bg-transparent text-white outline-none text-sm w-48 placeholder-zinc-600'
+            className='bg-transparent text-zinc-900 dark:text-white outline-none text-sm w-48 placeholder-zinc-400 dark:placeholder-zinc-600 transition-colors'
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
@@ -46,10 +46,10 @@ function AdminUsers() {
       {status === 'loading' ? (
         <div className='flex justify-center py-20'><div className='w-10 h-10 rounded-full border-2 border-[#6556CD] border-t-transparent animate-spin'></div></div>
       ) : (
-        <div className='bg-[#1A1929] rounded-2xl border border-zinc-800 overflow-hidden'>
+        <div className='bg-white dark:bg-[#1A1929] rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden transition-all shadow-sm'>
           <table className='w-full text-sm'>
             <thead>
-              <tr className='border-b border-zinc-800 text-zinc-500 text-xs uppercase tracking-wider'>
+              <tr className='border-b border-zinc-200 dark:border-zinc-800 text-zinc-500 text-xs uppercase tracking-wider transition-colors'>
                 <th className='p-4 text-left'>User</th>
                 <th className='p-4 text-left'>Email</th>
                 <th className='p-4 text-left'>Role</th>
@@ -59,16 +59,16 @@ function AdminUsers() {
             </thead>
             <tbody>
               {filtered.map((u, i) => (
-                <tr key={u._id} className={`border-b border-zinc-800/50 hover:bg-zinc-800/30 duration-150 ${i % 2 === 0 ? '' : 'bg-zinc-900/20'}`}>
+                <tr key={u._id} className={`border-b border-zinc-200/50 dark:border-zinc-800/50 hover:bg-zinc-50 dark:hover:bg-zinc-800/30 duration-150 transition-colors ${i % 2 === 0 ? '' : 'bg-zinc-50/50 dark:bg-zinc-900/20'}`}>
                   <td className='p-4'>
                     <div className='flex items-center gap-3'>
                       <div className='w-8 h-8 rounded-full bg-[#6556CD] flex items-center justify-center text-white font-bold text-sm flex-shrink-0'>
                         {u.name?.[0]?.toUpperCase()}
                       </div>
-                      <span className='text-white font-semibold'>{u.name}</span>
+                      <span className='text-zinc-900 dark:text-white font-semibold transition-colors'>{u.name}</span>
                     </div>
                   </td>
-                  <td className='p-4 text-zinc-400'>{u.email}</td>
+                  <td className='p-4 text-zinc-600 dark:text-zinc-400 transition-colors'>{u.email}</td>
                   <td className='p-4'>
                     <span className={`text-xs px-2.5 py-1 rounded-full font-semibold ${u.role === 'admin' ? 'bg-[#6556CD]/20 text-[#a99ef5]' : 'bg-zinc-800 text-zinc-400'}`}>
                       {u.role}

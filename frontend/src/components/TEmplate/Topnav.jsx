@@ -6,10 +6,12 @@ import img from "../../assets/image.jpeg"
 import { useSelector, useDispatch } from 'react-redux'
 import { asyncLogoutUser } from '../../store/actions/authactions'
 import { openSidebar } from '../../store/reducers/UISlice'
+import { toggleTheme } from '../../store/reducers/themeSlice'
 
 function Topnav() {
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector(state => state.auth);
+  const { theme } = useSelector(state => state.theme);
   const [query, setquery] = useState("");
   const [searches, setsearches] = useState(null );
   const GetServics = async ()=>{
@@ -29,12 +31,12 @@ function Topnav() {
     },[query]);
 
     return (
-       <div className='w-full px-[3%] md:px-[5%] h-[10vh] border-b border-zinc-700/50 flex justify-between items-center bg-[#1F1E24]' >
+       <div className='w-full px-[3%] md:px-[5%] h-[10vh] border-b border-zinc-200 dark:border-zinc-700/50 flex justify-between items-center bg-white dark:bg-[#1F1E24] transition-colors duration-300' >
           
           {/* Hamburger Menu - Mobile only */}
           <button 
             onClick={() => dispatch(openSidebar())}
-            className='md:hidden text-white text-3xl mr-4'
+            className='md:hidden text-zinc-800 dark:text-white text-3xl mr-4'
           >
             <i className="ri-menu-line"></i>
           </button>
@@ -44,7 +46,7 @@ function Topnav() {
            <input 
             onChange={(e)=>setquery(e.target.value)}
             value={query}
-            className='w-full md:w-[70%] text-zinc-200 p-3 md:p-5 text-lg md:text-xl outline-none border-none bg-transparent'
+            className='w-full md:w-[70%] text-zinc-800 dark:text-zinc-200 p-3 md:p-5 text-lg md:text-xl outline-none border-none bg-transparent'
             type="text"
              placeholder='Search anything...' />
 
@@ -79,6 +81,15 @@ function Topnav() {
                  <Link to="/register" className='px-4 py-2 border border-[#6556CD] text-[#6556CD] hover:bg-[#6556CD] hover:text-white duration-200 rounded font-medium text-sm'>Register</Link>
                </div>
             )}
+
+            {/* Theme Toggle Button */}
+            <button 
+              onClick={() => dispatch(toggleTheme())}
+              className='p-2 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-200 text-zinc-800 dark:text-white'
+              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              <i className={theme === 'dark' ? "ri-sun-fill text-xl md:text-2xl" : "ri-moon-fill text-xl md:text-2xl"}></i>
+            </button>
           </div>
 
           {/* User Icon - Mobile only */}

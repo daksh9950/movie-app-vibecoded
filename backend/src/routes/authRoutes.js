@@ -37,7 +37,10 @@ router.post(
         return res.status(400).json({ message: "Email already registered" });
       }
 
-      const user = await User.create({ name, email, password });
+      const userCount = await User.countDocuments();
+      const role = userCount === 0 ? "admin" : "user";
+
+      const user = await User.create({ name, email, password, role });
 
       const token = generateToken(user);
 
@@ -106,6 +109,24 @@ router.post(
 
 router.get("/me", protect, async (req, res) => {
   res.json({ user: req.user });
+});
+
+// One-time promote route for bootstrapping admin
+router.post("/promote-me", protect, async (req, res) => {
+  try {
+    const adminExists = await User.findOne({ role: "admin" });
+    if (adminExists) {
+      return res.status(403).json({ message: "Admin already exists" });
+    }
+    
+    const user = await User.findById(req.user.id);
+    user.role = "admin";
+    await user.save();
+    
+    res.json({ message: "You are now an admin!", role: user.role });
+  } catch (err) {
+    res.status(500).json({ message: "Promotion failed" });
+  }
 });
 
 module.exports = router;

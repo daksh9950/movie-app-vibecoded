@@ -1,5 +1,11 @@
 import backendAxios from "../../utlis/backendAxios";
-import { loginStart, loginSuccess, loginFailure, logoutUserStore, loadUser, setFavorites, addFavorite, removeFavorite, setHistory, addHistoryItem } from "../reducers/Authslice";
+import { 
+    loginStart, loginSuccess, loginFailure, logoutUserStore, loadUser, 
+    setFavorites, addFavorite, removeFavorite, 
+    setHistory, addHistoryItem,
+    setWatchlist, addToWatchlist, removeFromWatchlist,
+    setRatings, addRating
+} from "../reducers/Authslice";
 
 // Login specific action
 export const asyncLoginUser = (credentials) => async (dispatch) => {
@@ -47,6 +53,8 @@ export const asyncLoadUser = () => async (dispatch) => {
     dispatch(loadUser(response.data));
     dispatch(asyncFetchFavorites());
     dispatch(asyncFetchHistory());
+    dispatch(asyncFetchWatchlist());
+    dispatch(asyncFetchRatings());
   } catch (error) {
     dispatch(logoutUserStore());
   }
@@ -101,4 +109,51 @@ export const asyncAddToHistory = (itemData) => async (dispatch, getState) => {
     // Silently fail — history tracking is non-critical
     console.error("Failed to add to history", error);
   }
+};
+
+// Watchlist Actions
+export const asyncFetchWatchlist = () => async (dispatch) => {
+    try {
+        const response = await backendAxios.get("/user/watchlist");
+        dispatch(setWatchlist(response.data.watchlist));
+    } catch (error) {
+        console.error("Failed to fetch watchlist", error);
+    }
+};
+
+export const asyncAddToWatchlist = (movieData) => async (dispatch) => {
+    try {
+        await backendAxios.post("/user/watchlist", movieData);
+        dispatch(addToWatchlist(movieData));
+    } catch (error) {
+        console.error("Failed to add to watchlist", error);
+    }
+};
+
+export const asyncRemoveFromWatchlist = (tmdbId) => async (dispatch) => {
+    try {
+        await backendAxios.delete(`/user/watchlist/${tmdbId}`);
+        dispatch(removeFromWatchlist(tmdbId));
+    } catch (error) {
+        console.error("Failed to remove from watchlist", error);
+    }
+};
+
+// Ratings Actions
+export const asyncFetchRatings = () => async (dispatch) => {
+    try {
+        const response = await backendAxios.get("/user/ratings");
+        dispatch(setRatings(response.data.ratings));
+    } catch (error) {
+        console.error("Failed to fetch ratings", error);
+    }
+};
+
+export const asyncAddRating = (ratingData) => async (dispatch) => {
+    try {
+        await backendAxios.post("/user/ratings", ratingData);
+        dispatch(addRating(ratingData));
+    } catch (error) {
+        console.error("Failed to add rating", error);
+    }
 };

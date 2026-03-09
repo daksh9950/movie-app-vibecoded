@@ -17,17 +17,17 @@ function Sidenav() {
                 />
             )}
 
-            <div className={`fixed md:static top-0 left-0 z-[150] w-[70%] md:w-[20%] h-screen bg-[#1F1E24] border-zinc-400 border-r-2 flex flex-col flex-shrink-0 transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`} >
+            <div className={`fixed md:static top-0 left-0 z-[150] w-[70%] md:w-[20%] h-screen bg-white dark:bg-[#1F1E24] border-zinc-200 dark:border-zinc-700/50 border-r flex flex-col flex-shrink-0 transition-all duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`} >
                 {/* Logo & Close Button */}
                 <div className='px-8 pt-8 pb-4 flex justify-between items-center'>
-                    <h1 className='text-2xl text-white font-black' >
+                    <h1 className='text-2xl text-zinc-900 dark:text-white font-black transition-colors duration-300' >
                         <i className=" text-[#6556CD] ri-tv-fill text-2xl "></i>
                         <span className='text-2xl ml-2' >DSR MOVIES</span>
                     </h1>
                     {/* Close button - mobile only */}
                     <button 
                         onClick={() => dispatch(closeSidebar())}
-                        className='md:hidden text-white text-3xl'
+                        className='md:hidden text-zinc-800 dark:text-white text-3xl'
                     >
                         <i className="ri-close-line"></i>
                     </button>
@@ -35,23 +35,24 @@ function Sidenav() {
 
                 {/* Scrollable navigation area */}
                 <div className='flex-1 overflow-y-auto px-8 pb-8 scrollbar-hide'>
-                    <nav className='flex flex-col text-zinc-400 text-xl gap-1'>
-                        <h1 className='text-white font-semibold text-xl mt-3 mb-3 ' >New Feeds</h1>
-                        <Link onClick={() => dispatch(closeSidebar())} to='/trending' className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3 ' >   <i className="ri-fire-fill"></i> Trending</Link>
-                        <Link onClick={() => dispatch(closeSidebar())} to="/popular" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3' >     <i className="ri-heart-fill"></i> Popular</Link>
-                        <Link onClick={() => dispatch(closeSidebar())} to="/movie" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3' >   <i className="ri-movie-2-fill"></i> Movies</Link>
-                        <Link onClick={() => dispatch(closeSidebar())} to="/tv" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3' >   <i className="ri-tv-2-fill"></i> Tv Shows</Link>
-                        <Link onClick={() => dispatch(closeSidebar())} to="/person" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3' >     <i className="ri-user-fill"></i> Peoples</Link>
-                        <Link onClick={() => dispatch(closeSidebar())} to="/favorites" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3' >     <i className="ri-bookmark-heart-fill"></i> Favorites</Link>
-                        <Link onClick={() => dispatch(closeSidebar())} to="/history" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3 mb-3' >     <i className="ri-history-fill"></i> History</Link>
+                    <nav className='flex flex-col text-zinc-500 dark:text-zinc-400 text-xl gap-1'>
+                        <h1 className='text-zinc-900 dark:text-white font-semibold text-xl mt-3 mb-3 ' >New Feeds</h1>
+                        <Link onClick={() => dispatch(closeSidebar())} to='/trending' className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3 transition-colors' >   <i className="ri-fire-fill"></i> Trending</Link>
+                        <Link onClick={() => dispatch(closeSidebar())} to="/popular" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3 transition-colors' >     <i className="ri-heart-fill"></i> Popular</Link>
+                        <Link onClick={() => dispatch(closeSidebar())} to="/movie" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3 transition-colors' >   <i className="ri-movie-2-fill"></i> Movies</Link>
+                        <Link onClick={() => dispatch(closeSidebar())} to="/tv" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3 transition-colors' >   <i className="ri-tv-2-fill"></i> Tv Shows</Link>
+                        <Link onClick={() => dispatch(closeSidebar())} to="/person" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3 transition-colors' >     <i className="ri-user-fill"></i> Peoples</Link>
+                        <Link onClick={() => dispatch(closeSidebar())} to="/favorites" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3 transition-colors' >     <i className="ri-bookmark-heart-fill"></i> Favorites</Link>
+                        <Link onClick={() => dispatch(closeSidebar())} to="/watchlist" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3 transition-colors' >     <i className="ri-bookmark-fill"></i> Watchlist</Link>
+                        <Link onClick={() => dispatch(closeSidebar())} to="/history" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3 mb-3 transition-colors' >     <i className="ri-history-fill"></i> History</Link>
                     </nav>
 
-                    <hr className='border-1 border-zinc-600' />
+                    <hr className='border-1 border-zinc-200 dark:border-zinc-700' />
 
-                    <nav className='flex flex-col text-zinc-400 text-xl gap-1'>
-                        <h1 className='text-white font-semibold text-xl mt-5 mb-3' >Website Information</h1>
-                        <Link onClick={() => dispatch(closeSidebar())} to="/about" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3' ><i className="ri-information-fill"></i> About DSR</Link>
-                        <Link onClick={() => dispatch(closeSidebar())} to="/contact" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3' ><i className="ri-mail-fill"></i> Contact Us</Link>
+                    <nav className='flex flex-col text-zinc-500 dark:text-zinc-400 text-xl gap-1'>
+                        <h1 className='text-zinc-900 dark:text-white font-semibold text-xl mt-5 mb-3' >Website Information</h1>
+                        <Link onClick={() => dispatch(closeSidebar())} to="/about" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3 transition-colors' ><i className="ri-information-fill"></i> About DSR</Link>
+                        <Link onClick={() => dispatch(closeSidebar())} to="/contact" className='hover:bg-[#6556CD] hover:text-white duration-200 rounded-md p-3 transition-colors' ><i className="ri-mail-fill"></i> Contact Us</Link>
                     </nav>
                 </div>
             </div>

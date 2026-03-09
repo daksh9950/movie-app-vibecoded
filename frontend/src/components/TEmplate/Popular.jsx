@@ -47,11 +47,11 @@ function Popular() {
     }, [popular])
 
     return popular.length > 0 ? (
-        <div className='w-full h-full flex flex-col md:flex-row overflow-hidden bg-[#1F1E24]'>
+        <div className='w-full h-full flex flex-col md:flex-row overflow-hidden bg-white dark:bg-[#1F1E24] transition-colors duration-300'>
             <Sidenav />
-            <div className='w-full md:w-[80%] h-full overflow-auto overflow-x-hidden'>
-                <div className='w-full flex flex-col md:flex-row items-center justify-between px-[3%] py-5 border-b border-zinc-700/50' >
-                    <h1 className='text-xl md:text-2xl font-semibold text-zinc-400 flex items-center mb-4 md:mb-0' >
+            <div id="scrollableDiv" className='w-full md:w-[80%] h-full overflow-auto overflow-x-hidden transition-colors duration-300'>
+                <div className='w-full flex flex-col md:flex-row items-center justify-between px-[3%] py-5 border-b border-zinc-200 dark:border-zinc-700/50 transition-colors duration-300' >
+                    <h1 className='text-xl md:text-2xl font-semibold text-zinc-900 dark:text-zinc-400 flex items-center mb-4 md:mb-0 transition-colors duration-300' >
                         <i onClick={() => navigate(-1)} className="mr-3 hover:text-[#6556CD] ri-arrow-left-fill cursor-pointer"></i> 
                         Popular
                     </h1> 
@@ -83,6 +83,7 @@ function Popular() {
                         next={getpopular}
                         hasMore={hasmore}
                         loader={<h4 className='text-center text-zinc-500 py-5'>Loading...</h4>}
+                        scrollableTarget="scrollableDiv"
                     >
                         <Cards data={popular} title={category} />
                     </InfiniteScroll>

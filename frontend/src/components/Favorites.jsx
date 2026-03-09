@@ -32,12 +32,12 @@ function Favorites() {
     })) || [];
 
     return (
-      <div className='w-full h-full flex flex-col md:flex-row overflow-hidden bg-[#1F1E24]'>
+      <div className='w-full h-full flex flex-col md:flex-row overflow-hidden bg-white dark:bg-[#1F1E24] transition-colors duration-300'>
         <Sidenav />
-        <div className='w-full md:w-[80%] h-full overflow-auto overflow-x-hidden'>
+        <div className='w-full md:w-[80%] h-full overflow-auto overflow-x-hidden transition-colors duration-300'>
           <Topnav />
-          <div className='px-[5%] py-5 flex justify-between items-center border-b border-zinc-700/50'>
-            <h1 className='text-xl md:text-3xl font-semibold text-zinc-300 flex items-center gap-3'>
+          <div className='px-[5%] py-5 flex justify-between items-center border-b border-zinc-200 dark:border-zinc-700/50 transition-colors duration-300'>
+            <h1 className='text-xl md:text-3xl font-semibold text-zinc-900 dark:text-zinc-300 flex items-center gap-3 transition-colors duration-300'>
               <i onClick={() => navigate(-1)} className="hover:text-[#6556CD] cursor-pointer ri-arrow-left-line"></i> 
               My Favorites
             </h1>

@@ -13,6 +13,7 @@ import Trailer from './components/TEmplate/Trailer'
 import Login from './components/Login'
 import Register from './components/Register'
 import Favorites from './components/Favorites'
+import Watchlist from './components/Watchlist'
 import History from './components/History'
 import About from './components/About'
 import Contact from './components/Contact'
@@ -21,15 +22,25 @@ import AdminLayout from './components/admin/AdminLayout'
 import AdminDashboard from './components/admin/AdminDashboard'
 import AdminMovies from './components/admin/AdminMovies'
 import AdminUsers from './components/admin/AdminUsers'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { asyncLoadUser } from './store/actions/authactions'
 
 function App() {
   const dispatch = useDispatch();
+  const { theme } = useSelector((state) => state.theme);
 
   React.useEffect(() => {
     dispatch(asyncLoadUser());
   }, [dispatch]);
+
+  React.useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }, [theme]);
 
   return (
     
@@ -55,6 +66,7 @@ function App() {
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
         <Route path='/favorites' element={<Favorites/>} />
+        <Route path='/watchlist' element={<Watchlist/>} />
         <Route path='/history' element={<History/>} />
         <Route path='/about' element={<About/>} />
         <Route path='/contact' element={<Contact/>} />

@@ -22,21 +22,21 @@ function MovieModal({ initial, onClose, onSave }) {
 
   const field = (name, label, type = 'text', full = false) => (
     <div className={full ? 'col-span-2' : ''}>
-      <label className='text-zinc-400 text-sm block mb-1'>{label}</label>
+      <label className='text-zinc-500 dark:text-zinc-400 text-sm block mb-1 transition-colors'>{label}</label>
       {name === 'description' ? (
-        <textarea name={name} value={form[name]} onChange={handleChange} rows={3} className='w-full p-3 rounded-lg bg-[#13121A] text-white border border-zinc-700 focus:border-[#6556CD] outline-none resize-none text-sm' />
+        <textarea name={name} value={form[name]} onChange={handleChange} rows={3} className='w-full p-3 rounded-lg bg-zinc-50 dark:bg-[#13121A] text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-700 focus:border-[#6556CD] outline-none resize-none text-sm transition-all' />
       ) : (
-        <input type={type} name={name} value={form[name]} onChange={handleChange} className='w-full p-3 rounded-lg bg-[#13121A] text-white border border-zinc-700 focus:border-[#6556CD] outline-none text-sm' />
+        <input type={type} name={name} value={form[name]} onChange={handleChange} className='w-full p-3 rounded-lg bg-zinc-50 dark:bg-[#13121A] text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-700 focus:border-[#6556CD] outline-none text-sm transition-all' />
       )}
     </div>
   );
 
   return (
     <div className='fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4'>
-      <div className='bg-[#1A1929] rounded-2xl w-full max-w-lg p-8 border border-zinc-800 max-h-[90vh] overflow-y-auto'>
+      <div className='bg-white dark:bg-[#1A1929] rounded-2xl w-full max-w-lg p-8 border border-zinc-200 dark:border-zinc-800 max-h-[90vh] overflow-y-auto transition-all'>
         <div className='flex justify-between items-center mb-6'>
-          <h2 className='text-white text-xl font-bold'>{initial ? 'Edit Movie' : 'Add New Movie'}</h2>
-          <button onClick={onClose} className='text-zinc-400 hover:text-white text-2xl'><i className="ri-close-line"></i></button>
+          <h2 className='text-zinc-900 dark:text-white text-xl font-bold transition-colors'>{initial ? 'Edit Movie' : 'Add New Movie'}</h2>
+          <button onClick={onClose} className='text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white text-2xl transition-all'><i className="ri-close-line"></i></button>
         </div>
         {error && <p className='text-red-400 text-sm mb-4'>{error}</p>}
         <form onSubmit={handleSubmit} className='grid grid-cols-2 gap-4'>
@@ -85,8 +85,8 @@ function AdminMovies() {
     <div className='p-8'>
       <div className='flex justify-between items-center mb-6'>
         <div>
-          <h1 className='text-2xl font-bold text-white'>Movies</h1>
-          <p className='text-zinc-400 text-sm'>{movies.length} custom movies in database</p>
+          <h1 className='text-2xl font-bold text-zinc-900 dark:text-white transition-colors'>Movies</h1>
+          <p className='text-zinc-600 dark:text-zinc-400 text-sm transition-colors'>{movies.length} custom movies in database</p>
         </div>
         <button onClick={() => setModal('add')} className='flex items-center gap-2 px-4 py-2.5 bg-[#6556CD] hover:bg-[#5244a3] text-white rounded-lg font-semibold duration-200'>
           <i className="ri-add-line text-lg"></i> Add Movie
@@ -96,15 +96,15 @@ function AdminMovies() {
       {status === 'loading' ? (
         <div className='flex justify-center py-20'><div className='w-10 h-10 rounded-full border-2 border-[#6556CD] border-t-transparent animate-spin'></div></div>
       ) : movies.length === 0 ? (
-        <div className='flex flex-col items-center justify-center py-24 text-zinc-600'>
+        <div className='flex flex-col items-center justify-center py-24 text-zinc-400 dark:text-zinc-600 transition-colors'>
           <i className="ri-movie-2-line text-6xl mb-4"></i>
           <p className='text-lg'>No custom movies yet. Click "Add Movie" to create one.</p>
         </div>
       ) : (
-        <div className='bg-[#1A1929] rounded-2xl border border-zinc-800 overflow-hidden'>
+        <div className='bg-white dark:bg-[#1A1929] rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden transition-all shadow-sm'>
           <table className='w-full text-sm'>
             <thead>
-              <tr className='border-b border-zinc-800 text-zinc-500 text-xs uppercase tracking-wider'>
+              <tr className='border-b border-zinc-200 dark:border-zinc-800 text-zinc-500 text-xs uppercase tracking-wider transition-colors'>
                 <th className='p-4 text-left'>Title</th>
                 <th className='p-4 text-left'>Genre</th>
                 <th className='p-4 text-left'>Category</th>
@@ -115,12 +115,12 @@ function AdminMovies() {
             </thead>
             <tbody>
               {movies.map((m, i) => (
-                <tr key={m._id} className={`border-b border-zinc-800/50 hover:bg-zinc-800/30 duration-150 ${i % 2 === 0 ? '' : 'bg-zinc-900/20'}`}>
-                  <td className='p-4 font-semibold text-white max-w-[160px] truncate'>{m.title}</td>
-                  <td className='p-4 text-zinc-400'>{m.genre || '—'}</td>
-                  <td className='p-4 text-zinc-400'>{m.category || '—'}</td>
-                  <td className='p-4 text-zinc-400'>{m.releaseDate || '—'}</td>
-                  <td className='p-4 text-zinc-400'>{m.tmdbId || '—'}</td>
+                <tr key={m._id} className={`border-b border-zinc-200/50 dark:border-zinc-800/50 hover:bg-zinc-50 dark:hover:bg-zinc-800/30 duration-150 transition-colors ${i % 2 === 0 ? '' : 'bg-zinc-50/50 dark:bg-zinc-900/20'}`}>
+                  <td className='p-4 font-semibold text-zinc-900 dark:text-white max-w-[160px] truncate transition-colors'>{m.title}</td>
+                  <td className='p-4 text-zinc-600 dark:text-zinc-400 transition-colors'>{m.genre || '—'}</td>
+                  <td className='p-4 text-zinc-600 dark:text-zinc-400 transition-colors'>{m.category || '—'}</td>
+                  <td className='p-4 text-zinc-600 dark:text-zinc-400 transition-colors'>{m.releaseDate || '—'}</td>
+                  <td className='p-4 text-zinc-600 dark:text-zinc-400 transition-colors'>{m.tmdbId || '—'}</td>
                   <td className='p-4 text-right'>
                     <button onClick={() => setModal(m)} className='mr-2 p-2 rounded-lg text-blue-400 hover:bg-blue-500/20 duration-200'><i className="ri-edit-line text-lg"></i></button>
                     <button onClick={() => setConfirmDelete(m)} className='p-2 rounded-lg text-red-400 hover:bg-red-500/20 duration-200'><i className="ri-delete-bin-line text-lg"></i></button>

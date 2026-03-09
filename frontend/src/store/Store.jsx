@@ -4,6 +4,7 @@ import  tvReducer  from './reducers/Tvslice'
 import  authReducer   from './reducers/Authslice'
 import  adminReducer  from './reducers/AdminSlice'
 import  uiReducer  from './reducers/UISlice'
+import  themeReducer  from './reducers/themeSlice'
 
 import { configureStore } from '@reduxjs/toolkit'
 
@@ -15,6 +16,7 @@ export const  store = configureStore({
        auth: authReducer,
        admin: adminReducer,
        ui: uiReducer,
+       theme: themeReducer,
   },
   devTools: true 
 })

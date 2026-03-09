@@ -2,7 +2,14 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { asyncloadmovie, removemovie } from '../../store/actions/movieactions';
-import { asyncAddToFavorites, asyncRemoveFromFavorites, asyncAddToHistory } from '../../store/actions/authactions';
+import { 
+    asyncAddToFavorites, 
+    asyncRemoveFromFavorites, 
+    asyncAddToHistory,
+    asyncAddToWatchlist,
+    asyncRemoveFromWatchlist,
+    asyncAddRating
+} from '../../store/actions/authactions';
 import Loader from "./Loader"
 import HorizontalCards from './HorizontalCards';
 import Trailer from './Trailer';
@@ -14,10 +21,12 @@ function Moviedetails() {
     const {id} = useParams();
     const dispatch = useDispatch();
     const {info} = useSelector((state)=> state.movie)
-    const { isAuthenticated, favorites } = useSelector((state) => state.auth);
+    const { isAuthenticated, favorites, watchlist, ratings } = useSelector((state) => state.auth);
     
     // Check if current movie is in favorites
     const isFavorite = favorites?.some((fav) => fav.tmdbId === id);
+    const isInWatchlist = watchlist?.some((item) => item.tmdbId === id);
+    const userRating = ratings?.find((r) => r.tmdbId === id)?.rating;
 
     const toggleFavorite = () => {
         if (!isAuthenticated) return navigate('/login');
@@ -32,6 +41,30 @@ function Moviedetails() {
             };
             dispatch(asyncAddToFavorites(data));
         }
+    };
+
+    const toggleWatchlist = () => {
+        if (!isAuthenticated) return navigate('/login');
+        if (isInWatchlist) {
+            dispatch(asyncRemoveFromWatchlist(id));
+        } else {
+            const data = {
+                tmdbId: id,
+                title: info.detail.name || info.detail.title || info.detail.original_name || info.detail.original_title,
+                posterPath: info.detail.poster_path || info.detail.backdrop_path || info.detail.profile_path,
+                mediaType: 'movie'
+            };
+            dispatch(asyncAddToWatchlist(data));
+        }
+    };
+
+    const handleRating = (rating) => {
+        if (!isAuthenticated) return navigate('/login');
+        dispatch(asyncAddRating({
+            tmdbId: id,
+            rating: rating,
+            mediaType: 'movie'
+        }));
     };
     useEffect(()=>{
         dispatch(asyncloadmovie(id))
@@ -58,10 +91,10 @@ function Moviedetails() {
                      backgroundPosition:"center",
                      backgroundSize: "cover",
                      backgroundRepeat: 'no-repeat',   }} 
-            className='relative min-h-screen w-full px-[5%] md:px-[10%] pb-10 overflow-x-hidden' >
+            className='relative min-h-screen w-full px-[5%] md:px-[10%] pb-10 overflow-x-hidden transition-colors duration-300' >
 
             {/*PART ! NAVIGATION  */}
-            <nav className='w-full text-zinc-300 flex items-center gap-5 md:gap-10 h-[10vh] text-lg md:text-xl' >
+            <nav className='w-full text-zinc-300 dark:text-zinc-100 flex items-center gap-5 md:gap-10 h-[10vh] text-lg md:text-xl transition-colors duration-300' >
                 <Link 
                    onClick={()=>navigate(-1)}  
                    className="hover:text-[#6556CD] ri-arrow-left-fill" >
@@ -121,8 +154,31 @@ function Moviedetails() {
                         className={`px-6 py-3 rounded-lg flex items-center gap-2 font-bold duration-200 border shadow-xl ${isFavorite ? 'bg-zinc-200 text-red-500 border-zinc-200' : 'border-[#6556CD] text-[#6556CD] hover:bg-[#6556CD] hover:text-white'}`}
                       >
                         <i className={isFavorite ? "ri-heart-3-fill text-xl" : "ri-heart-add-fill text-xl"}></i>
-                        {isFavorite ? 'Saved to Favorites' : 'Add to Favorites'}
+                        {isFavorite ? 'Saved' : 'Favorite'}
                       </button>
+
+                      <button 
+                        onClick={toggleWatchlist} 
+                        className={`px-6 py-3 rounded-lg flex items-center gap-2 font-bold duration-200 border shadow-xl ${isInWatchlist ? 'bg-yellow-600 text-white border-yellow-600' : 'border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-white'}`}
+                      >
+                        <i className={isInWatchlist ? "ri-bookmark-fill text-xl" : "ri-bookmark-line text-xl"}></i>
+                        {isInWatchlist ? 'Watchlist' : 'Add to Watchlist'}
+                      </button>
+
+                      {isAuthenticated && (
+                        <div className='flex flex-col gap-2'>
+                          <h3 className='text-sm font-bold text-zinc-500 dark:text-zinc-400'>Your Rating</h3>
+                          <div className='flex gap-1'>
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((star) => (
+                              <i 
+                                key={star}
+                                onClick={() => handleRating(star)}
+                                className={`ri-star-fill cursor-pointer text-xl transition-colors ${star <= (userRating || 0) ? 'text-yellow-400' : 'text-zinc-300 dark:text-zinc-600 hover:text-yellow-200'}`}
+                              ></i>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                   </div>
               </div>
             </div>

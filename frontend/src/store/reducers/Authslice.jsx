@@ -8,6 +8,8 @@ const initialState = {
   error: null,
   favorites: [],
   history: [],
+  watchlist: [],
+  ratings: [],
 };
 
 const authSlice = createSlice({
@@ -56,10 +58,36 @@ const authSlice = createSlice({
     addHistoryItem(state, action) {
         // Keep most recent first, cap at 50
         state.history = [action.payload, ...state.history.filter(h => !(h.tmdbId === action.payload.tmdbId && h.action === action.payload.action))].slice(0, 50);
+    },
+    setWatchlist(state, action) {
+        state.watchlist = action.payload;
+    },
+    addToWatchlist(state, action) {
+        state.watchlist.push(action.payload);
+    },
+    removeFromWatchlist(state, action) {
+        state.watchlist = state.watchlist.filter(item => item.tmdbId !== action.payload);
+    },
+    setRatings(state, action) {
+        state.ratings = action.payload;
+    },
+    addRating(state, action) {
+        const index = state.ratings.findIndex(r => r.tmdbId === action.payload.tmdbId);
+        if (index !== -1) {
+            state.ratings[index] = action.payload;
+        } else {
+            state.ratings.push(action.payload);
+        }
     }
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure, logoutUserStore, loadUser, setFavorites, addFavorite, removeFavorite, setHistory, addHistoryItem } = authSlice.actions;
+export const { 
+    loginStart, loginSuccess, loginFailure, logoutUserStore, loadUser, 
+    setFavorites, addFavorite, removeFavorite, 
+    setHistory, addHistoryItem,
+    setWatchlist, addToWatchlist, removeFromWatchlist,
+    setRatings, addRating
+} = authSlice.actions;
 
 export default authSlice.reducer;

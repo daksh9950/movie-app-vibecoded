@@ -45,6 +45,85 @@ router.delete("/favorites/:tmdbId", protect, async (req, res) => {
   res.json({ favorites: req.user.favorites });
 });
 
+// Watchlist Routes
+router.get("/watchlist", protect, async (req, res) => {
+  res.json({ watchlist: req.user.watchlist || [] });
+});
+
+router.post(
+  "/watchlist",
+  protect,
+  [
+    body("tmdbId").notEmpty().withMessage("tmdbId is required"),
+    body("title").notEmpty().withMessage("title is required"),
+    body("posterPath").optional().isString(),
+    body("mediaType").optional().isString(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { tmdbId, title, posterPath, mediaType } = req.body;
+
+    const exists = req.user.watchlist.find((item) => item.tmdbId === tmdbId);
+    if (exists) {
+      return res.status(400).json({ message: "Already in watchlist" });
+    }
+
+    req.user.watchlist.push({ tmdbId, title, posterPath, mediaType });
+    await req.user.save();
+
+    res.status(201).json({ watchlist: req.user.watchlist });
+  }
+);
+
+router.delete("/watchlist/:tmdbId", protect, async (req, res) => {
+  const tmdbId = req.params.tmdbId;
+  req.user.watchlist = (req.user.watchlist || []).filter((item) => item.tmdbId !== tmdbId);
+  await req.user.save();
+  res.json({ watchlist: req.user.watchlist });
+});
+
+// Ratings Routes
+router.get("/ratings", protect, async (req, res) => {
+  res.json({ ratings: req.user.ratings || [] });
+});
+
+router.post(
+  "/ratings",
+  protect,
+  [
+    body("tmdbId").notEmpty().withMessage("tmdbId is required"),
+    body("rating").isNumeric().withMessage("rating is required and must be a number"),
+    body("mediaType").optional().isString(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { tmdbId, rating, mediaType } = req.body;
+
+    const existingIndex = req.user.ratings.findIndex((item) => item.tmdbId === tmdbId);
+    
+    if (existingIndex !== -1) {
+      // Update existing rating
+      req.user.ratings[existingIndex].rating = rating;
+      req.user.ratings[existingIndex].mediaType = mediaType || req.user.ratings[existingIndex].mediaType;
+    } else {
+      // Add new rating
+      req.user.ratings.push({ tmdbId, rating, mediaType });
+    }
+    
+    await req.user.save();
+    res.status(201).json({ ratings: req.user.ratings });
+  }
+);
+
+
 router.get("/history", protect, async (req, res) => {
   const history = (req.user.watchHistory || []).slice().reverse();
   res.json({ history });

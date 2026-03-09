@@ -42,8 +42,8 @@ function Persondetails() {
     },[id])
 
     return info ? (
-        <div className='w-full px-[5%] md:px-[10%] min-h-screen bg-[#1F1E24] pb-10' >
-            <nav className='w-full text-zinc-300 flex items-center justify-between h-[10vh]  ' >
+        <div className='w-full px-[5%] md:px-[10%] min-h-screen bg-white dark:bg-[#1F1E24] pb-10 transition-colors duration-300' >
+            <nav className='w-full text-zinc-900 dark:text-zinc-300 flex items-center justify-between h-[10vh] transition-colors duration-300' >
                 <Link 
                     onClick={()=>navigate(-1)}  
                     className="hover:text-[#6556CD] ri-arrow-left-fill text-2xl" >
@@ -66,7 +66,7 @@ function Persondetails() {
                       <hr className='w-full border-zinc-600 mt-8 mb-5'  />
                       
                       {/* {social media links} */}
-                      <div className='text-zinc-300 text-2xl gap-x-6 flex justify-center md:justify-start w-full' >
+                      <div className='text-zinc-600 dark:text-zinc-300 text-2xl gap-x-6 flex justify-center md:justify-start w-full transition-colors' >
                          <a target="_blank" className='hover:text-[#6556CD] duration-200' href={`https://en.wikipedia.org/wiki/${info.externalid.wikidata_id}`}><i className="ri-earth-fill"></i></a>
                          <a target="_blank" className='hover:text-[#6556CD] duration-200' href={`https://www.facebook.com/${info.externalid.facebook_id}`}><i className="ri-facebook-circle-fill"></i></a>
                          <a target="_blank" className='hover:text-[#6556CD] duration-200' href={`https://www.instagram.com/${info.externalid.instagram_id}`}><i className="ri-instagram-fill"></i></a>
@@ -75,37 +75,37 @@ function Persondetails() {
 
                       {/* {personal information} */}
                       <div className='w-full mt-8'>
-                          <h1 className='text-2xl text-zinc-100 font-bold mb-5' >Personal Info</h1>
+                          <h1 className='text-2xl text-zinc-900 dark:text-zinc-100 font-bold mb-5 transition-colors' >Personal Info</h1>
 
                           <div className='mb-4'>
-                            <h1 className='text-zinc-100 font-semibold'>Known For</h1>
-                            <h1 className='text-zinc-400'>{info.detail.known_for_department}</h1>
+                            <h1 className='text-zinc-900 dark:text-zinc-100 font-semibold transition-colors'>Known For</h1>
+                            <h1 className='text-zinc-600 dark:text-zinc-400 transition-colors'>{info.detail.known_for_department}</h1>
                           </div>
 
                           <div className='mb-4'>
-                            <h1 className='text-zinc-100 font-semibold'>Gender</h1>
-                            <h1 className='text-zinc-400'>{info.detail.gender === 2 ? "Male" : "Female"}</h1>
+                            <h1 className='text-zinc-900 dark:text-zinc-100 font-semibold transition-colors'>Gender</h1>
+                            <h1 className='text-zinc-600 dark:text-zinc-400 transition-colors'>{info.detail.gender === 2 ? "Male" : "Female"}</h1>
                           </div>
 
                           <div className='mb-4'>
-                            <h1 className='text-zinc-100 font-semibold'>Birthday</h1>
-                            <h1 className='text-zinc-400'>{info.detail.birthday || "N/A"}</h1>
+                            <h1 className='text-zinc-900 dark:text-zinc-100 font-semibold transition-colors'>Birthday</h1>
+                            <h1 className='text-zinc-600 dark:text-zinc-400 transition-colors'>{info.detail.birthday || "N/A"}</h1>
                           </div>
 
                           <div className='mb-4'>
-                            <h1 className='text-zinc-100 font-semibold'>Place Of Birth</h1>
-                            <h1 className='text-zinc-400'>{info.detail.place_of_birth || "N/A"}</h1>
+                            <h1 className='text-zinc-900 dark:text-zinc-100 font-semibold transition-colors'>Place Of Birth</h1>
+                            <h1 className='text-zinc-600 dark:text-zinc-400 transition-colors'>{info.detail.place_of_birth || "N/A"}</h1>
                           </div>
                       </div>
                 </div>  
 
                 {/* {part 3 right details and information} */}
                 <div className='w-full md:w-[75%]'>
-                     <h1 className='text-4xl md:text-6xl text-zinc-100 font-black mb-6 text-center md:text-left' >{info.detail.name}</h1>
+                     <h1 className='text-4xl md:text-6xl text-zinc-900 dark:text-zinc-100 font-black mb-6 text-center md:text-left transition-colors' >{info.detail.name}</h1>
 
                       <div className='mb-8'>
-                        <h1 className='text-xl text-zinc-100 font-bold mb-3'>Biography</h1>
-                        <p className='text-zinc-400 leading-relaxed' >{info.detail.biography || "No biography available."}</p>
+                        <h1 className='text-xl text-zinc-900 dark:text-zinc-100 font-bold mb-3 transition-colors'>Biography</h1>
+                        <p className='text-zinc-600 dark:text-zinc-400 leading-relaxed transition-colors' >{info.detail.biography || "No biography available."}</p>
                       </div>
 
                       <div className='mb-8'>
@@ -114,7 +114,7 @@ function Persondetails() {
                       </div>
 
                       <div className='flex justify-between items-center mb-5'>
-                        <h1 className='text-xl text-zinc-100 font-bold uppercase'>Acting History</h1>
+                        <h1 className='text-xl text-zinc-900 dark:text-zinc-100 font-bold uppercase transition-colors'>Acting History</h1>
                         <Dropdown 
                           title="Category" 
                           options={["tv", "movie"]} 
@@ -122,11 +122,11 @@ function Persondetails() {
                         />
                       </div>
 
-                      <div className='w-full h-[50vh] overflow-y-auto border border-zinc-700 rounded-lg p-5 bg-[#1A1929]'>
+                      <div className='w-full h-[50vh] overflow-y-auto border border-zinc-200 dark:border-zinc-700 rounded-lg p-5 bg-zinc-50 dark:bg-[#1A1929] transition-colors'>
                         {info[category + "credits"].cast.map((c, i) => (
-                           <li key={i} className='hover:text-white list-none duration-300 cursor-pointer p-3 rounded-md hover:bg-[#1F1E24] flex flex-col md:flex-row md:items-center gap-2 border-b border-zinc-800 last:border-0'>
+                           <li key={i} className='hover:text-[#6556CD] list-none duration-300 cursor-pointer p-3 rounded-md hover:bg-zinc-100 dark:hover:bg-[#1F1E24] flex flex-col md:flex-row md:items-center gap-2 border-b border-zinc-200 dark:border-zinc-800 last:border-0 transition-colors'>
                               <Link to={`/${category}/details/${c.id}`} className='flex-1'>
-                                 <span className='text-zinc-100 font-medium'>{c.name || c.title || c.original_name || c.original_title}</span>
+                                 <span className='text-zinc-900 dark:text-zinc-100 font-medium transition-colors'>{c.name || c.title || c.original_name || c.original_title}</span>
                                  {c.character && <span className='text-zinc-500 block text-sm'> as {c.character}</span>}
                               </Link>
                            </li>

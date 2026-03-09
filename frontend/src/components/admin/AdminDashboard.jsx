@@ -6,13 +6,13 @@ import { asyncFetchAdminUsers } from '../../store/actions/adminactions';
 
 function StatCard({ icon, label, value, color }) {
   return (
-    <div className='bg-[#1A1929] rounded-xl p-6 flex items-center gap-5 border border-zinc-800'>
+    <div className='bg-white dark:bg-[#1A1929] rounded-xl p-6 flex items-center gap-5 border border-zinc-200 dark:border-zinc-800 transition-all shadow-sm'>
       <div className={`w-14 h-14 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 ${color}`}>
         <i className={icon}></i>
       </div>
       <div>
-        <p className='text-zinc-400 text-sm'>{label}</p>
-        <p className='text-white text-3xl font-bold'>{value}</p>
+        <p className='text-zinc-500 dark:text-zinc-400 text-sm transition-colors'>{label}</p>
+        <p className='text-zinc-900 dark:text-white text-3xl font-bold transition-colors'>{value}</p>
       </div>
     </div>
   );
@@ -36,8 +36,8 @@ function AdminDashboard() {
     <div className='p-8'>
       {/* Header */}
       <div className='mb-8'>
-        <h1 className='text-3xl font-bold text-white'>Welcome back, {user?.name} 👋</h1>
-        <p className='text-zinc-400 mt-1'>Here's what's happening on DSR Movies today.</p>
+        <h1 className='text-3xl font-bold text-zinc-900 dark:text-white transition-colors'>Welcome back, {user?.name} 👋</h1>
+        <p className='text-zinc-600 dark:text-zinc-400 mt-1 transition-colors'>Here's what's happening on DSR Movies today.</p>
       </div>
 
       {/* Stats */}
@@ -48,18 +48,18 @@ function AdminDashboard() {
       </div>
 
       {/* Quick actions */}
-      <h2 className='text-xl font-semibold text-white mb-4'>Quick Actions</h2>
+      <h2 className='text-xl font-semibold text-zinc-900 dark:text-white mb-4 transition-colors'>Quick Actions</h2>
       <div className='grid grid-cols-2 gap-5'>
-        <button onClick={() => navigate('/admin/movies')} className='bg-[#1A1929] border border-zinc-800 hover:border-[#6556CD] rounded-xl p-6 text-left duration-200 group'>
+        <button onClick={() => navigate('/admin/movies')} className='bg-white dark:bg-[#1A1929] border border-zinc-200 dark:border-zinc-800 hover:border-[#6556CD] rounded-xl p-6 text-left duration-200 group transition-all shadow-sm'>
           <i className="ri-movie-2-fill text-3xl text-[#6556CD] mb-3 block"></i>
-          <h3 className='text-white font-bold text-lg'>Manage Movies</h3>
-          <p className='text-zinc-400 text-sm mt-1'>Add, edit, or delete custom movies from the database.</p>
+          <h3 className='text-zinc-900 dark:text-white font-bold text-lg transition-colors'>Manage Movies</h3>
+          <p className='text-zinc-600 dark:text-zinc-400 text-sm mt-1 transition-colors'>Add, edit, or delete custom movies from the database.</p>
           <span className='text-[#6556CD] text-sm mt-3 flex items-center gap-1 group-hover:gap-2 duration-200'>Go to Movies <i className="ri-arrow-right-line"></i></span>
         </button>
-        <button onClick={() => navigate('/admin/users')} className='bg-[#1A1929] border border-zinc-800 hover:border-[#6556CD] rounded-xl p-6 text-left duration-200 group'>
+        <button onClick={() => navigate('/admin/users')} className='bg-white dark:bg-[#1A1929] border border-zinc-200 dark:border-zinc-800 hover:border-[#6556CD] rounded-xl p-6 text-left duration-200 group transition-all shadow-sm'>
           <i className="ri-group-fill text-3xl text-[#6556CD] mb-3 block"></i>
-          <h3 className='text-white font-bold text-lg'>Manage Users</h3>
-          <p className='text-zinc-400 text-sm mt-1'>View, ban, or remove registered users from the platform.</p>
+          <h3 className='text-zinc-900 dark:text-white font-bold text-lg transition-colors'>Manage Users</h3>
+          <p className='text-zinc-600 dark:text-zinc-400 text-sm mt-1 transition-colors'>View, ban, or remove registered users from the platform.</p>
           <span className='text-[#6556CD] text-sm mt-3 flex items-center gap-1 group-hover:gap-2 duration-200'>Go to Users <i className="ri-arrow-right-line"></i></span>
         </button>
       </div>
