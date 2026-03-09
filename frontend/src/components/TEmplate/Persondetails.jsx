@@ -42,11 +42,11 @@ function Persondetails() {
     },[id])
 
     return info ? (
-        <div className='w-full px-[5%] md:px-[10%] min-h-screen bg-white dark:bg-[#1F1E24] pb-10 transition-colors duration-300' >
-            <nav className='w-full text-zinc-900 dark:text-zinc-300 flex items-center justify-between h-[10vh] transition-colors duration-300' >
+        <div className='w-full h-full overflow-y-auto bg-white dark:bg-[#1F1E24] transition-colors duration-300 scroll-smooth' >
+            <nav className='shrink-0 w-full px-[5%] md:px-[10%] text-zinc-900 dark:text-zinc-300 flex items-center justify-between h-[10vh] sticky top-0 bg-white/80 dark:bg-[#1F1E24]/80 backdrop-blur-md z-[100] border-b border-zinc-200 dark:border-zinc-800/50 transition-all duration-300' >
                 <Link 
                     onClick={()=>navigate(-1)}  
-                    className="hover:text-[#6556CD] ri-arrow-left-fill text-2xl" >
+                    className="hover:text-[#6556CD] ri-arrow-left-fill text-2xl transition-colors duration-200" >
                 </Link>
                 
                 <button onClick={toggleFavorite} className={`px-4 py-2 rounded-lg flex items-center gap-2 font-semibold duration-200 border text-sm md:text-base ${isFavorite ? 'bg-zinc-200 text-red-500 border-zinc-200' : 'border-[#6556CD] text-[#6556CD] hover:bg-[#6556CD] hover:text-white'}`}>
@@ -54,8 +54,8 @@ function Persondetails() {
                     <span>{isFavorite ? 'Saved' : 'Add to Favorites'}</span>
                 </button>
              </nav>
-
-            <div className='w-full flex flex-col md:flex-row gap-10' >
+ 
+            <div className='w-full px-[5%] md:px-[10%] py-10 flex flex-col md:flex-row gap-10' >
                {/* {part 2 left poster and details} */}
                 <div className='w-full md:w-[25%] flex flex-col items-center md:items-start'  >
                      <img 
@@ -108,8 +108,8 @@ function Persondetails() {
                         <p className='text-zinc-600 dark:text-zinc-400 leading-relaxed transition-colors' >{info.detail.biography || "No biography available."}</p>
                       </div>
 
-                      <div className='mb-8'>
-                        <h1 className='text-xl text-zinc-100 font-bold mb-4 uppercase'>Known For</h1>
+                       <div className='mb-10'>
+                        <h1 className='text-xl text-zinc-900 dark:text-zinc-100 font-bold mb-4 uppercase tracking-wider transition-colors'>Known For</h1>
                         <HorizontalCards data={info.combinedcredits.cast}  />
                       </div>
 

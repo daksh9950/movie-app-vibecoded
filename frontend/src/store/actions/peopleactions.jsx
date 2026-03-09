@@ -17,12 +17,11 @@ export const asyncloadperson= (id) => async (dispatch, getState) =>{
         
        
         let theultimatedetails = {
-            detail : detail.data, 
-            externalid :externalid.data,
-            combinedcredits:  combinedcredits.data,
-            tv: tv.data,
-            movie: movie.data,
-           
+            detail: detail.data,
+            externalid: externalid.data,
+            combinedcredits: combinedcredits.data,
+            tvcredits: tv.data,
+            moviecredits: movie.data,
         }
         
 

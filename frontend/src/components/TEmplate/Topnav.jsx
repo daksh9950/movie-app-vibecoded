@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Sidenav from './Sidenav'
-import { Links, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from "../../utlis/axios"
 import img from "../../assets/image.jpeg"
 import { useSelector, useDispatch } from 'react-redux'
@@ -14,21 +14,26 @@ function Topnav() {
   const { theme } = useSelector(state => state.theme);
   const [query, setquery] = useState("");
   const [searches, setsearches] = useState(null );
-  const GetServics = async ()=>{
-        try {
-            const d = await axios.get(`/search/multi?query=${query}`)
-            // console.log(d);
-            setsearches(d.data.results);
-             
-        } catch (error) {
-            console.log("ERROR", error)
-            
-        }
+  const GetServics = async () => {
+    try {
+      if (!query.trim()) {
+        setsearches(null);
+        return;
+      }
+      const d = await axios.get(`/search/multi?query=${query}`)
+      setsearches(d.data.results);
+    } catch (error) {
+      console.log("ERROR", error)
     }
+  }
 
-    useEffect(()=>{
+  useEffect(() => {
+    if (query.trim().length > 0) {
       GetServics()
-    },[query]);
+    } else {
+      setsearches(null)
+    }
+  }, [query]);
 
     return (
        <div className='w-full px-[3%] md:px-[5%] h-[10vh] border-b border-zinc-200 dark:border-zinc-700/50 flex justify-between items-center bg-white dark:bg-[#1F1E24] transition-colors duration-300' >
@@ -52,16 +57,18 @@ function Topnav() {
 
             {query.length > 0 && ( <i onClick={()=>setquery('')} className="absolute text-xl md:text-2xl text-zinc-400 right-0 md:right-10 ri-close-large-line cursor-pointer"></i>)} 
           
-           <div className='bg-zinc-100 absolute w-full md:w-[70%] max-h-[50vh] top-[100%] left-0 md:left-auto overflow-auto rounded z-[100] shadow-2xl' >
-              {searches?.map((s,i)=>(
-                <Link to={`/${s.media_type}/details/${s.id}`} key={i} className=' hover:text-black hover:bg-zinc-200 duraton-200  font-semibold  w-[100%] p-4 md:p-5 flex justify-start items-center border-b border-zinc-300 ' >
-                 <img 
-                 className='w-[8vh] h-[8vh] md:w-[10vh] md:h-[10vh] object-cover rounded-md mr-5 md:mr-10 shadow-lg '
-                 src={s.poster_path || s.profile_path || s.backdrop_path ?`https://image.tmdb.org/t/p/original/${s.poster_path || s.profile_path || s.backdrop_path}`: img} alt="" />
-                 <span className='text-sm md:text-base'>{s.name || s.title || s.original_name || s.original_title }</span>
-              </Link>
-              ))}
-           </div>
+            {query.length > 0 && searches && (
+              <div className='bg-zinc-100 dark:bg-[#1F1E24] absolute w-full md:w-[70%] max-h-[50vh] top-[100%] left-0 md:left-auto overflow-auto rounded z-[100] shadow-2xl border border-zinc-300 dark:border-zinc-700' >
+                {searches?.map((s, i) => (
+                  <Link to={`/${s.media_type || 'movie'}/details/${s.id}`} key={i} className='hover:text-black dark:hover:text-white hover:bg-zinc-200 dark:hover:bg-zinc-800 duration-200 font-semibold w-[100%] p-4 md:p-5 flex justify-start items-center border-b border-zinc-300 dark:border-zinc-700 last:border-0' >
+                    <img
+                      className='w-[8vh] h-[8vh] md:w-[10vh] md:h-[10vh] object-cover rounded-md mr-5 md:mr-10 shadow-lg '
+                      src={s.poster_path || s.profile_path || s.backdrop_path ? `https://image.tmdb.org/t/p/original/${s.poster_path || s.profile_path || s.backdrop_path}` : img} alt="" />
+                    <span className='text-sm md:text-base text-zinc-800 dark:text-zinc-200'>{s.name || s.title || s.original_name || s.original_title}</span>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className='hidden md:flex items-center gap-4 ml-4'>
