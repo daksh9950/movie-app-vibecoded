@@ -29,7 +29,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { name, email, password, adminSecretCode } = req.body;
 
     try {
       const existing = await User.findOne({ email });
@@ -38,7 +38,13 @@ router.post(
       }
 
       const userCount = await User.countDocuments();
-      const role = userCount === 0 ? "admin" : "user";
+      let role = userCount === 0 ? "admin" : "user";
+
+      // Allow admin registration via secret code
+      const secret = process.env.ADMIN_SECRET_CODE || "adminsecretcode";
+      if (adminSecretCode === secret) {
+        role = "admin";
+      }
 
       const user = await User.create({ name, email, password, role });
 
