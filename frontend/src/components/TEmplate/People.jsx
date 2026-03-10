@@ -47,17 +47,14 @@ function Person() {
     return person.length > 0 ? (
         <div className='w-full h-full flex flex-col md:flex-row overflow-hidden bg-[#1F1E24]'>
             <Sidenav />
-            <div id="scrollableDiv" className='w-full md:w-[80%] h-full overflow-auto overflow-x-hidden'>
-                <div className='w-full flex flex-col md:flex-row items-center justify-between px-[3%] py-5 border-b border-zinc-700/50' >
-                    <h1 className='text-xl md:text-2xl font-semibold text-zinc-400 flex items-center mb-4 md:mb-0' >
+            <div id="scrollableDiv" className='w-full md:w-[80%] h-full overflow-auto overflow-x-hidden transition-colors duration-300'>
+                <Topnav />
+                <div className='w-full flex flex-col md:flex-row items-center justify-between px-[3%] py-5 border-b border-zinc-200 dark:border-zinc-700/50 transition-colors duration-300' >
+                    <h1 className='text-xl md:text-2xl font-semibold text-zinc-900 dark:text-zinc-400 flex items-center mb-4 md:mb-0 transition-colors duration-300' >
                         <i onClick={() => navigate(-1)} className="mr-3 hover:text-[#6556CD] ri-arrow-left-fill cursor-pointer"></i> 
                         People
                     </h1> 
-
-                    <div className='flex items-center gap-2 w-full md:w-[80%]' >
-                        <Topnav />
-                    </div> 
-                </div>
+                </div> 
 
                 <div className='pb-10'>
                     <InfiniteScroll
