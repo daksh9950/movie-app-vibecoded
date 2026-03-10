@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const backendAxios = axios.create({
-    baseURL: "https://movie-app-vibecoded-backend.onrender.com/api",
-}); 
+    baseURL: import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api",
+});
 
 // Interceptor to add JWT token if available
 backendAxios.interceptors.request.use(
